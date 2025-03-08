@@ -1,0 +1,12 @@
+{
+  "equityNFTFactory": "0x74BC59E5fb6E445217b1a11b6cF6c325feB20468",
+  "fractionalInvestment": "0x3d57bCAe8bFa2c5e5DbE1D34BD2c02EAD9ccA0B1",
+  "dynamicValuation": "0xFc2CE42Fa416Fdb870aa73Af1f03a9a3900bBc7a",
+  "startupValidation": "0xD686895AadCF55522c3eA69Cdcb99E93178343D9",
+  "stakeholderGovernance": "0x169Bf64bF349cA610e06dE0Bd65e7cA3e0DEe665",
+  "profitDistribution": "0x081039913a9e1F487c7C302d869FD2E7977664dc",
+  "aiAdvisor": "0x1B25c121237643451A87B9AD3d54ead0377C31A4",
+  "financialDataOracle": "0xc1CAa2f7A98b7F695E82C0C7D16Bc3a7Df4B45FD",
+  "verificationOracle": "0x581C28B0d07c7Cc76F734F9C0BAbFB30a714b893",
+  "performanceMetricsOracle": "0x12FA8C6D91d7A89653f481F84f48897C5bac3a2D"
+}
