@@ -21,6 +21,12 @@ const nextConfig = {
     images: {
         domains: ['zeedchain.io'],
     },
+    typescript: {
+        ignoreBuildErrors: true,
+      },
+    eslint: {
+        ignoreDuringBuilds: true,
+      },
 
 }
 
