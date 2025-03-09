@@ -5,7 +5,8 @@ const nextConfig = {
         config.resolve.fallback = {
             fs: false,
             net: false,
-            tls: false
+            tls: false,
+            ethers: require.resolve('ethers')
         };
 
         // Add support for typechain-types transpilation
