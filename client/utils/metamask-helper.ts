@@ -1,4 +1,5 @@
 import { CHAIN_CONFIG, NETWORK_CONFIG } from '@/config/web3';
+import { parseUnits } from '@ethersproject/units';
 import { toast } from 'sonner';
 
 // Add type definition for window.ethereum
@@ -108,10 +109,8 @@ export const sendEth = async (to: string, amount: string): Promise<any> => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     const from = accounts[0];
     
-    // Convert amount to wei
-    const amountInWei = `0x${parseInt(
-      (Number(amount) * 1e18).toString()
-    ).toString(16)}`;
+    // Convert amount to wei using ethers parseUnits
+    const amountInWei = parseUnits(amount, 18).toHexString();
     
     // Send transaction
     const txHash = await window.ethereum.request({
@@ -129,4 +128,4 @@ export const sendEth = async (to: string, amount: string): Promise<any> => {
   } catch (error) {
     throw new Error(handleMetaMaskError(error));
   }
-}; 
+};

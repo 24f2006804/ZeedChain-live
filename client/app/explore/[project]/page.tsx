@@ -48,23 +48,23 @@ export default function StartupDetails({ params }: { params: { project: string }
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen p-10 flex flex-col items-center justify-center">
-        <h1 className="text-2xl font-bold mb-4">Connect Wallet to View Startup Details</h1>
-        <Button onClick={connectWallet}>Connect Wallet</Button>
+      <div className="min-h-screen p-10 flex flex-col items-center justify-center bg-black text-white">
+        <h1 className="text-2xl font-bold mb-4 text-violet-300">Connect Wallet to View Startup Details</h1>
+        <Button onClick={connectWallet} className="bg-violet-900 hover:bg-violet-800 text-white">Connect Wallet</Button>
       </div>
     )
   }
 
   if (!startup) {
     return (
-      <div className="min-h-screen p-10 flex items-center justify-center">
-        <div className="text-xl">Loading startup details...</div>
+      <div className="min-h-screen p-10 flex items-center justify-center bg-black text-white">
+        <div className="text-xl text-violet-300">Loading startup details...</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen p-8 bg-black text-white">
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="mb-8 flex items-start justify-between">
@@ -72,22 +72,22 @@ export default function StartupDetails({ params }: { params: { project: string }
             <img
               src={startup.logo_url}
               alt={startup.startup_name}
-              className="w-20 h-20 rounded-full border-2 border-gray-800"
+              className="w-20 h-20 rounded-full border-2 border-violet-700"
             />
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-4xl font-bold">{startup.startup_name}</h1>
-                {startup.verified && <CheckCircle className="text-blue-500 h-6 w-6" />}
+                <h1 className="text-4xl font-bold text-white">{startup.startup_name}</h1>
+                {startup.verified && <CheckCircle className="text-violet-400 h-6 w-6" />}
               </div>
               <div className="flex gap-2 mt-2">
-                <Badge variant="outline">{startup.industry}</Badge>
-                <Badge variant="outline">{startup.university_affiliation}</Badge>
+                <Badge variant="outline" className="bg-transparent border-violet-700 text-violet-300">{startup.industry}</Badge>
+                <Badge variant="outline" className="bg-transparent border-indigo-700 text-indigo-300">{startup.university_affiliation}</Badge>
               </div>
             </div>
           </div>
           <Button
             onClick={() => setIsInvestDialogOpen(true)}
-            className="bg-gradient-to-r from-[#267871] to-[#136a8a] hover:from-[#1b5d5a] hover:to-[#0f566e]"
+            className="bg-gradient-to-r from-violet-900 to-indigo-900 hover:from-violet-800 hover:to-indigo-800 text-white"
           >
             Invest Now
           </Button>
@@ -97,24 +97,26 @@ export default function StartupDetails({ params }: { params: { project: string }
         <div className="grid grid-cols-3 gap-6">
           {/* Left Column - Main Info */}
           <div className="col-span-2 space-y-6">
-            <Card>
+            <Card className="bg-black border border-violet-900 shadow-md shadow-violet-900/20">
               <CardHeader>
-                <CardTitle>About</CardTitle>
+                <CardTitle className="text-violet-300">About</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-400">{startup.description}</p>
+                <p className="text-gray-300">{startup.description}</p>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="bg-black border border-indigo-900 shadow-md shadow-indigo-900/20">
               <CardHeader>
-                <CardTitle>Funding Progress</CardTitle>
+                <CardTitle className="text-indigo-300">Funding Progress</CardTitle>
               </CardHeader>
               <CardContent>
-                <Progress value={startup.funding_progress} className="h-2 mb-2" />
+                <Progress value={startup.funding_progress} className="h-2 mb-2 bg-gray-800">
+                  <div className="h-full bg-gradient-to-r from-violet-600 to-indigo-600 rounded-full"></div>
+                </Progress>
                 <div className="flex justify-between text-sm text-gray-400">
-                  <span>${((startup.funding_progress / 100) * parseInt(startup.total_amount_being_raised.replace(/\D/g, ''))) / 1000}K raised</span>
-                  <span>{startup.total_amount_being_raised} goal</span>
+                  <span className="text-violet-400">${((startup.funding_progress / 100) * parseInt(startup.total_amount_being_raised.replace(/\D/g, ''))) / 1000}K raised</span>
+                  <span className="text-indigo-400">{startup.total_amount_being_raised} goal</span>
                 </div>
               </CardContent>
             </Card>
@@ -122,36 +124,36 @@ export default function StartupDetails({ params }: { params: { project: string }
 
           {/* Right Column - Investment Details */}
           <div className="space-y-6">
-            <Card>
+            <Card className="bg-black border border-blue-900 shadow-md shadow-blue-900/20">
               <CardHeader>
-                <CardTitle>Investment Details</CardTitle>
+                <CardTitle className="text-blue-300">Investment Details</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-3 text-gray-400">
-                  <CircleDollarSign />
+                  <CircleDollarSign className="text-violet-500" />
                   <div>
-                    <div className="font-medium text-white">{startup.current_valuation}</div>
+                    <div className="font-medium text-violet-300">{startup.current_valuation}</div>
                     <div className="text-sm">Current Valuation</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-gray-400">
-                  <Users2 />
+                  <Users2 className="text-blue-500" />
                   <div>
-                    <div className="font-medium text-white">{startup.available_equity_offered}</div>
+                    <div className="font-medium text-blue-300">{startup.available_equity_offered}</div>
                     <div className="text-sm">Available Equity</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-gray-400">
-                  <Building2 />
+                  <Building2 className="text-indigo-500" />
                   <div>
-                    <div className="font-medium text-white">{startup.minimum_investment}</div>
+                    <div className="font-medium text-indigo-300">{startup.minimum_investment}</div>
                     <div className="text-sm">Minimum Investment</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-gray-400">
-                  <TrendingUp />
+                  <TrendingUp className="text-violet-500" />
                   <div>
-                    <div className="font-medium text-white">{startup.days_left} Days</div>
+                    <div className="font-medium text-violet-300">{startup.days_left} Days</div>
                     <div className="text-sm">Time Left</div>
                   </div>
                 </div>
@@ -168,10 +170,10 @@ export default function StartupDetails({ params }: { params: { project: string }
       </div>
 
       <Dialog open={isInvestDialogOpen} onOpenChange={setIsInvestDialogOpen}>
-        <DialogContent>
+        <DialogContent className="bg-black border border-violet-900 text-white">
           <DialogHeader>
-            <DialogTitle>Invest in {startup.startup_name}</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-violet-300">Invest in {startup.startup_name}</DialogTitle>
+            <DialogDescription className="text-gray-400">
               Enter the amount you want to invest in USD. Minimum investment: {startup.minimum_investment}
             </DialogDescription>
           </DialogHeader>
@@ -183,16 +185,18 @@ export default function StartupDetails({ params }: { params: { project: string }
                 value={investmentAmount}
                 onChange={(e) => setInvestmentAmount(e.target.value)}
                 min={parseFloat(startup.minimum_investment.replace(/[^0-9.]/g, ''))}
+                className="bg-gray-900 border-violet-700 text-white focus:border-indigo-500 focus:ring-indigo-500"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsInvestDialogOpen(false)}>
+            <Button variant="outline" onClick={() => setIsInvestDialogOpen(false)} className="border-violet-700 text-violet-300 hover:bg-violet-900/20">
               Cancel
             </Button>
             <Button 
               onClick={handleInvest}
               disabled={!investmentAmount || parseFloat(investmentAmount) < parseFloat(startup.minimum_investment.replace(/[^0-9.]/g, ''))}
+              className="bg-gradient-to-r from-violet-700 to-indigo-800 hover:from-violet-600 hover:to-indigo-700 text-white disabled:opacity-50"
             >
               Confirm Investment
             </Button>
@@ -202,4 +206,3 @@ export default function StartupDetails({ params }: { params: { project: string }
     </div>
   )
 }
-

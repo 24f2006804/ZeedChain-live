@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { formatUnits, parseUnits } from '@ethersproject/units';
+import { BigNumber } from '@ethersproject/bignumber';
 import { useWeb3 } from './useWeb3';
 
 export interface FounderData {
@@ -30,7 +31,7 @@ export const useFounderData = () => {
       const totalStartups = await web3Service.getTotalStartups();
       let founderStartups = [];
       let totalInvestors = 0;
-      let totalInvestments = parseUnits("0", 18);
+      let totalInvestments = BigNumber.from(0);
 
       // Fetch details for each startup
       for (let i = 1; i <= totalStartups; i++) {
@@ -49,7 +50,7 @@ export const useFounderData = () => {
           });
 
           totalInvestors += investorCount;
-          totalInvestments += investmentAmount;
+          totalInvestments = totalInvestments.add(investmentAmount);
         }
       }
 

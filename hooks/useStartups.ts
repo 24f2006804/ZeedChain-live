@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { JsonRpcProvider } from '@ethersproject/providers';
 import { formatUnits, parseUnits } from '@ethersproject/units';
+import { AddressZero } from '@ethersproject/constants';
 import { useWeb3 } from './useWeb3';
 import { StartupData } from '@/components/ui/startupcard';
 import { toast } from 'sonner';
@@ -8,7 +8,7 @@ import { useKyc } from './useKyc';
 
 // Specified user address
 const SPECIFIED_USER_ADDRESS = "0x6AE9b9f7f404E686a5e762B851394a4708971078";
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+const ZERO_ADDRESS = AddressZero;
 
 export const useStartups = () => {
   const { web3Service, isConnected, account } = useWeb3();

@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { JsonRpcProvider, BrowserProvider } from '@ethersproject/providers';
-import type { Eip1193Provider } from '@ethersproject/providers';
+import { Web3Provider } from '@ethersproject/providers';
+import type { ExternalProvider } from '@ethersproject/providers';
 import { CHAIN_CONFIG, NETWORK_CONFIG } from '@/config/web3';
 import { Web3Service } from '@/services/Web3Service';
 import { toast } from 'sonner';
 
 declare global {
   interface Window {
-    ethereum?: Eip1193Provider;
+    ethereum?: ExternalProvider;
   }
 }
 
 export interface Web3State {
-  provider: JsonRpcProvider | null;
+  provider: Web3Provider | null;
   web3Service: Web3Service | null;
   chainId: string | null;
   account: string | null;
@@ -81,7 +81,7 @@ export const useWeb3 = () => {
         if (!switched) return false;
       }
 
-      const provider = new BrowserProvider(window.ethereum);
+      const provider = new Web3Provider(window.ethereum);
       const web3Service = new Web3Service(provider);
       await web3Service.init();
 
@@ -130,7 +130,7 @@ export const useWeb3 = () => {
     } else {
       try {
         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-        const provider = new BrowserProvider(window.ethereum);
+        const provider = new Web3Provider(window.ethereum);
         
         const web3Service = new Web3Service(provider);
         await web3Service.init();
