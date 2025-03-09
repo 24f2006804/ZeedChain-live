@@ -1,11 +1,15 @@
 import { ethers } from 'ethers';
 import deployedContracts from '../web3/deployed-contracts.json';
+import { VerificationOracle__factory } from '../web3/typechain-types/factories/contracts/VerificationOracle__factory';
+import { StartupValidation__factory } from '../web3/typechain-types/factories/contracts/StartupValidation__factory';
+import type { VerificationOracle, StartupValidation } from '../web3/typechain-types/contracts';
 
 export class Web3Service {
   private provider: ethers.BrowserProvider;
-  private kycContract: ethers.Contract;
-  private startupContract: ethers.Contract;
-
+  private kycContract!: VerificationOracle;
+  private startupContract!: StartupValidation;
+  private startupId?: bigint;
+  
   constructor(provider: ethers.BrowserProvider) {
     this.provider = provider;
   }
@@ -13,14 +17,12 @@ export class Web3Service {
   async init() {
     if (typeof window !== 'undefined') {
       const signer = await this.provider.getSigner();
-      this.kycContract = new ethers.Contract(
-        deployedContracts.verificationOracle, // Using verificationOracle for KYC
-        [], // TODO: Add ABI
+      this.kycContract = VerificationOracle__factory.connect(
+        deployedContracts.verificationOracle,
         signer
       );
-      this.startupContract = new ethers.Contract(
+      this.startupContract = StartupValidation__factory.connect(
         deployedContracts.startupValidation,
-        [], // TODO: Add ABI
         signer
       );
     }
@@ -28,7 +30,8 @@ export class Web3Service {
 
   async checkWalletKYCStatus(walletAddress: string): Promise<boolean> {
     try {
-      return await this.kycContract.hasCompletedKYC(walletAddress);
+      const status = await this.kycContract.getVerificationStatus(walletAddress);
+      return status.kycPassed && status.isValid;
     } catch (error) {
       console.error('Error checking KYC status:', error);
       return false;
@@ -37,7 +40,16 @@ export class Web3Service {
 
   async checkWalletStartup(walletAddress: string): Promise<boolean> {
     try {
-      return await this.startupContract.hasRegisteredStartup(walletAddress);
+      // Find the startup ID for this wallet first
+      const signer = await this.provider.getSigner();
+      const signerAddress = await signer.getAddress();
+      
+      // Load all validation requests and find matching one
+      const validationStatus = await this.startupContract.validationRequests(this.startupId || BigInt(0));
+      if (validationStatus.founder.toLowerCase() === walletAddress.toLowerCase()) {
+        return validationStatus.status === BigInt(1); // Assuming 1 means approved
+      }
+      return false;
     } catch (error) {
       console.error('Error checking startup status:', error);
       return false;
@@ -49,28 +61,18 @@ export class Web3Service {
       const signer = await this.provider.getSigner();
       const startupWithSigner = this.startupContract.connect(signer);
       
-      // Convert data to match contract structure
-      const startupInfo = {
-        name: startupData.name,
-        industry: startupData.industry,
-        fundingStage: startupData.funding,
-        details: startupData.details,
-        financials: {
-          arr: ethers.parseEther(startupData.arr.replace(/[^0-9.]/g, '')),
-          mrr: ethers.parseEther(startupData.mrr.replace(/[^0-9.]/g, '')),
-          cogs: parseInt(startupData.cogs),
-          marketing: parseInt(startupData.marketing),
-          cac: parseInt(startupData.cac),
-          logistics: parseInt(startupData.logistics),
-          grossMargin: parseInt(startupData.grossMargin),
-          ebitda: parseInt(startupData.ebitda),
-          salaries: parseInt(startupData.salaries),
-          misc: parseInt(startupData.miscPercentage),
-          pat: parseInt(startupData.pat)
-        }
-      };
+      // Generate IPFS hash of startup data (this should be done separately)
+      const documentHash = startupData.ipfsHash;
 
-      const tx = await startupWithSigner.registerStartup(startupInfo);
+      // Request validation with a new startup ID
+      const validatorCount = await this.startupContract.getValidatorCount();
+      const startupId = validatorCount + BigInt(1); // Simple ID generation
+      this.startupId = startupId;
+
+      const tx = await startupWithSigner.requestValidation(
+        startupId,
+        documentHash
+      );
       await tx.wait();
       return true;
     } catch (error) {
@@ -84,11 +86,9 @@ export class Web3Service {
       const signer = await this.provider.getSigner();
       const kycWithSigner = this.kycContract.connect(signer);
       
-      const tx = await kycWithSigner.completeKYC(
-        kycData.founderName,
-        kycData.aadharNumber,
-        kycData.panNumber,
-        kycData.ipfsLink // Contains uploaded docs including selfie
+      const tx = await kycWithSigner.requestVerification(
+        await signer.getAddress(),
+        kycData.ipfsHash // Contains uploaded docs including selfie, aadhar, pan, etc.
       );
       await tx.wait();
       return true;
