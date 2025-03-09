@@ -9,7 +9,7 @@ import {
   ProfitDistribution__factory,
   DynamicValuation__factory,
   FractionalInvestment__factory
-} from '../web3/typechain-types/factories/contracts';
+} from '../../web3/typechain-types/factories/contracts';
 import type {
   EquityNFTFactory,
   VerificationOracle,
@@ -20,10 +20,10 @@ import type {
   ProfitDistribution,
   DynamicValuation,
   FractionalInvestment
-} from '../web3/typechain-types/contracts';
-import { CONTRACT_ADDRESSES } from '@/config/web3';
+} from '../../web3/typechain-types/contracts';
+import { CONTRACT_ADDRESSES } from '../config/web3';
 import * as ethers from 'ethers';
-import { sendEth } from '@/utils/metamask-helper';
+import { sendEth } from '../utils/metamask-helper';
 
 export class Web3Service {
   public contracts: {

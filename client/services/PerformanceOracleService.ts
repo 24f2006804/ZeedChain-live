@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { PerformanceMetricsOracle } from '../../../web3/typechain-types';
+import { PerformanceMetricsOracle } from '../../web3/typechain-types/contracts/PerformanceMetricsOracle';
 
 export class PerformanceOracleService {
   private oracle: PerformanceMetricsOracle;
@@ -10,7 +10,7 @@ export class PerformanceOracleService {
 
   async requestMetricsUpdate(startupId: number) {
     try {
-      const tx = await this.oracle.requestStartupMetrics(startupId);
+      const tx = await this.oracle.requestPerformanceMetrics(startupId, "defaultSource");
       const receipt = await tx.wait();
       return receipt;
     } catch (error) {
@@ -21,18 +21,16 @@ export class PerformanceOracleService {
 
   async getStartupMetrics(startupId: number) {
     try {
-      const [
-        growthRate,
-        retentionRate,
-        engagementScore,
-        timestamp
-      ] = await this.oracle.getLatestMetrics(startupId);
+      const metrics = await this.oracle.getLatestMetrics(startupId);
 
       return {
-        growthRate: Number(growthRate) / 100, // Convert from basis points
-        retentionRate: Number(retentionRate) / 100,
-        engagementScore: Number(engagementScore) / 100,
-        timestamp: Number(timestamp)
+        activeUsers: Number(metrics.activeUsers),
+        monthlyRevenue: Number(metrics.monthlyRevenue) / 1e18, // Convert from wei
+        customerGrowth: Number(metrics.customerGrowth) / 100, // Convert from basis points
+        retentionRate: Number(metrics.retentionRate) / 100, // Convert from basis points
+        unitEconomics: Number(metrics.unitEconomics) / 1e18, // Convert from wei
+        timestamp: Number(metrics.timestamp),
+        isValidated: metrics.isValidated
       };
     } catch (error) {
       console.error('Error fetching startup metrics:', error);
@@ -44,10 +42,13 @@ export class PerformanceOracleService {
     try {
       const history = await this.oracle.getHistoricalMetrics(startupId);
       return history.map(metric => ({
-        growthRate: Number(metric.growthRate) / 100,
+        activeUsers: Number(metric.activeUsers),
+        monthlyRevenue: Number(metric.monthlyRevenue) / 1e18,
+        customerGrowth: Number(metric.customerGrowth) / 100,
         retentionRate: Number(metric.retentionRate) / 100,
-        engagementScore: Number(metric.engagementScore) / 100,
-        timestamp: Number(metric.timestamp)
+        unitEconomics: Number(metric.unitEconomics) / 1e18,
+        timestamp: Number(metric.timestamp),
+        isValidated: metric.isValidated
       }));
     } catch (error) {
       console.error('Error fetching historical metrics:', error);
@@ -57,7 +58,7 @@ export class PerformanceOracleService {
 
   async getUpdateInterval() {
     try {
-      const interval = await this.oracle.minUpdateInterval();
+      const interval = await this.oracle.MIN_UPDATE_INTERVAL();
       return Number(interval);
     } catch (error) {
       console.error('Error fetching update interval:', error);
@@ -78,20 +79,22 @@ export class PerformanceOracleService {
   onMetricsReceived(
     startupId: number,
     callback: (
-      growthRate: number,
+      activeUsers: number,
+      monthlyRevenue: number,
+      customerGrowth: number,
       retentionRate: number,
-      engagementScore: number,
-      timestamp: number
+      unitEconomics: number
     ) => void
   ) {
-    const filter = this.oracle.filters.MetricsReceived(startupId);
-    this.oracle.on(filter, (id, growth, retention, engagement, time) => {
-      if (id === startupId) {
+    const filter = this.oracle.filters.MetricsReceived(BigInt(startupId));
+    this.oracle.on(filter, (id, active, revenue, growth, retention, unit) => {
+      if (id === BigInt(startupId)) {
         callback(
+          Number(active),
+          Number(revenue) / 1e18,
           Number(growth) / 100,
           Number(retention) / 100,
-          Number(engagement) / 100,
-          Number(time)
+          Number(unit) / 1e18
         );
       }
     });

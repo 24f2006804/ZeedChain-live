@@ -16,6 +16,16 @@ const nextConfig = {
             net: false,
             tls: false
         };
+        config.module.rules.push({
+            test: /\.ts$/,
+            include: /web3\/typechain-types/,
+            use: [{ loader: 'ts-loader' }]
+        });
+        // Use absolute paths for web3 imports
+        config.resolve.alias = {
+            ...config.resolve.alias,
+            '@web3': '/home/agnij/Desktop/ZeedChain-live/web3'
+        };
         return config;
     },
     images: {
@@ -23,11 +33,10 @@ const nextConfig = {
     },
     eslint: {
         ignoreDuringBuilds: true, // Ignores ESLint errors during build
-      },
-      typescript: {
+    },
+    typescript: {
         ignoreBuildErrors: true, // Ignores TypeScript errors during build
-      },
-
+    },
 }
 
 export default nextConfig;
