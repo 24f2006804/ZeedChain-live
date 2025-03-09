@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
-import type { BrowserProvider } from 'ethers';
+import { BrowserProvider, type Eip1193Provider } from 'ethers';
 import { CHAIN_CONFIG, NETWORK_CONFIG } from '@/config/web3';
 import { Web3Service } from '@/services/Web3Service';
 import { toast } from 'sonner';
 
-let ethers: typeof import('ethers');
-
-// Dynamic import ethers only on client side
-if (typeof window !== 'undefined') {
-  import('ethers').then((module) => {
-    ethers = module;
-  });
+declare global {
+  interface Window {
+    ethereum?: Eip1193Provider;
+  }
 }
 
 export interface Web3State {
@@ -83,11 +80,7 @@ export const useWeb3 = () => {
         if (!switched) return false;
       }
 
-      if (!ethers) {
-        ethers = await import('ethers');
-      }
-
-      const provider = new ethers.BrowserProvider(window.ethereum);
+      const provider = new BrowserProvider(window.ethereum);
       const web3Service = new Web3Service(provider);
       await web3Service.init();
 
@@ -137,11 +130,7 @@ export const useWeb3 = () => {
       try {
         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
 
-        if (!ethers) {
-          ethers = await import('ethers');
-        }
-
-        const provider = new ethers.BrowserProvider(window.ethereum);
+        const provider = new BrowserProvider(window.ethereum);
         
         const web3Service = new Web3Service(provider);
         await web3Service.init();

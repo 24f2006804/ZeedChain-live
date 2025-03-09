@@ -1,4 +1,5 @@
-import type { BaseContract, BigNumberish } from 'ethers';
+import type { BaseContract, BigNumberish, BrowserProvider } from 'ethers';
+import { getAddress, ZeroAddress, formatUnits, parseUnits } from 'ethers';
 import { 
   EquityNFTFactory__factory,
   VerificationOracle__factory,
@@ -22,8 +23,6 @@ import type {
   FractionalInvestment
 } from '../../web3/typechain-types/contracts';
 import { CONTRACT_ADDRESSES } from '../config/web3';
-import * as ethers from 'ethers';
-import { sendEth } from '../utils/metamask-helper';
 
 export class Web3Service {
   public contracts: {
@@ -38,16 +37,11 @@ export class Web3Service {
     fractionalInvestment?: FractionalInvestment;
   } = {};
 
-  constructor(public provider: any) {}
+  constructor(public provider: BrowserProvider) {}
 
   async init() {
-    // Verify contract addresses are configured
-    const missingContracts = Object.entries(CONTRACT_ADDRESSES)
-      .filter(([_, address]) => !address)
-      .map(([name]) => name);
-
-    if (missingContracts.length > 0) {
-      throw new Error(`Missing contract addresses for: ${missingContracts.join(', ')}`);
+    if (!this.provider) {
+      throw new Error('Provider not initialized');
     }
 
     try {
@@ -98,7 +92,6 @@ export class Web3Service {
         CONTRACT_ADDRESSES.FractionalInvestment,
         signer
       );
-
     } catch (error) {
       console.error('Error initializing contracts:', error);
       throw new Error('Failed to initialize Web3Service contracts');
