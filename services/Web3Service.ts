@@ -1,8 +1,32 @@
-import { ethers } from 'ethers';
-import deployedContracts from '../web3/deployed-contracts.json';
-import { VerificationOracle__factory } from '../web3/typechain-types/factories/contracts/VerificationOracle__factory';
+import type { BaseContract, BigNumberish } from 'ethers';
+import { 
+  EquityNFTFactory__factory,
+  VerificationOracle__factory,
+  FinancialDataOracle__factory,
+  PerformanceMetricsOracle__factory,
+  AIAdvisorIntegration__factory,
+  StakeholderGovernance__factory,
+  ProfitDistribution__factory,
+  DynamicValuation__factory,
+  FractionalInvestment__factory
+} from '../web3/typechain-types/factories/contracts';
 import { StartupValidation__factory } from '../web3/typechain-types/factories/contracts/StartupValidation__factory';
-import type { VerificationOracle, StartupValidation } from '../web3/typechain-types/contracts';
+import type {
+  EquityNFTFactory,
+  VerificationOracle,
+  FinancialDataOracle,
+  PerformanceMetricsOracle,
+  AIAdvisorIntegration,
+  StakeholderGovernance,
+  ProfitDistribution,
+  DynamicValuation,
+  FractionalInvestment,
+  StartupValidation
+} from '../web3/typechain-types/contracts';
+import deployedContracts from '../web3/deployed-contracts.json';
+import { CONTRACT_ADDRESSES } from '../client/config/web3';
+import * as ethers from 'ethers';
+import { sendEth } from '../client/utils/metamask-helper';
 
 export class Web3Service {
   private provider: ethers.BrowserProvider;
