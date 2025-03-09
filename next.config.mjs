@@ -1,16 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
+    transpilePackages: ['ethers'],
     webpack: (config) => {
         config.resolve.fallback = {
             fs: false,
             net: false,
-            tls: false,
-            ethers: require.resolve('ethers')
+            tls: false
         };
 
-        // Add web3 directory to module resolution paths
-        config.resolve.modules.push('/home/agnij/Desktop/ZeedChain-live/web3');
+        config.resolve.extensionAlias = {
+            '.js': ['.ts', '.js']
+        };
+
+        config.module.rules.push({
+            test: /\.m?js$/,
+            type: "javascript/auto",
+            resolve: {
+                fullySpecified: false
+            }
+        });
 
         // Configure typechain-types handling
         config.module.rules.push({
@@ -26,12 +35,6 @@ const nextConfig = {
                 }
             ]
         });
-
-        // Use absolute paths for web3 imports
-        config.resolve.alias = {
-            ...config.resolve.alias,
-            '@web3': '/home/agnij/Desktop/ZeedChain-live/web3'
-        };
 
         return config;
     },

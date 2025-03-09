@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
-import { BrowserProvider } from 'ethers';
+import { JsonRpcProvider, BrowserProvider } from '@ethersproject/providers';
+import type { Eip1193Provider } from '@ethersproject/providers';
 import { CHAIN_CONFIG, NETWORK_CONFIG } from '@/config/web3';
 import { Web3Service } from '@/services/Web3Service';
 import { toast } from 'sonner';
 
+declare global {
+  interface Window {
+    ethereum?: Eip1193Provider;
+  }
+}
+
 export interface Web3State {
-  provider: BrowserProvider | null;
+  provider: JsonRpcProvider | null;
   web3Service: Web3Service | null;
   chainId: string | null;
   account: string | null;

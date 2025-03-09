@@ -1,13 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
+    transpilePackages: ['ethers'],
     webpack: (config) => {
         config.resolve.fallback = {
             fs: false,
             net: false,
-            tls: false,
-            ethers: require.resolve('ethers')
+            tls: false
         };
+
+        config.resolve.extensionAlias = {
+            '.js': ['.ts', '.js']
+        };
+
+        config.module.rules.push({
+            test: /\.m?js$/,
+            type: "javascript/auto",
+            resolve: {
+                fullySpecified: false
+            }
+        });
 
         // Add support for typechain-types transpilation
         config.module.rules.push({
