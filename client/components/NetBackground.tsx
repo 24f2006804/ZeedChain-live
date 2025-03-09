@@ -7,12 +7,12 @@ const VantaBackground = () => {
   const vantaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Initialize the effect only if window exists and VANTA is loaded
     if (typeof window !== 'undefined' && (window as any).VANTA) {
       if (!vantaEffect && vantaRef.current) {
         setVantaEffect(
           (window as any).VANTA.NET({
             el: vantaRef.current,
+            THREE,
             mouseControls: true,
             touchControls: true,
             gyroControls: false,
@@ -25,8 +25,7 @@ const VantaBackground = () => {
             points: 8.00,
             maxDistance: 20.00,
             spacing: 16.00,
-            showDots: false,
-            THREE
+            showDots: false
           })
         );
       }
@@ -38,15 +37,6 @@ const VantaBackground = () => {
       }
     };
   }, [vantaEffect]);
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (vantaEffect) {
-        vantaEffect.destroy();
-      }
-    };
-  }, []);
 
   return <div ref={vantaRef} className="h-full w-full absolute top-0 left-0" />;
 };
