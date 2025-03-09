@@ -32,6 +32,19 @@ import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Separator } from "@/components/ui/separator"
 
+type MetricCardProps = {
+  title: string;
+  value: string;
+  change: string;
+  icon: React.ReactNode;
+};
+
+type SaleItemProps = {
+  name: string;
+  email: string;
+  amount: string;
+}
+
 const chartData = [
   { month: "January", desktop: 186 },
   { month: "February", desktop: 305 },
@@ -125,9 +138,10 @@ const InvestorDashboard = () => {
     </div>
   );
 };
-function MetricCard({ title, value, change, icon }) {
+
+const MetricCard = ({ title, value, change, icon }: MetricCardProps): React.ReactElement => {
   return (
-    <Card className="border ">
+    <Card className="border">
       <CardContent className="p-6">
         <div className="flex justify-between items-start">
           <div>
@@ -139,10 +153,10 @@ function MetricCard({ title, value, change, icon }) {
         </div>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-function SaleItem({ name, email, amount }) {
+const SaleItem = ({ name, email, amount }: SaleItemProps): React.ReactElement => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
@@ -156,8 +170,8 @@ function SaleItem({ name, email, amount }) {
       </div>
       <span className="text-[#136a8a] font-medium">{amount}</span>
     </div>
-  )
-}
+  );
+};
 
 function RevenueChart() {
   // This is a simplified chart component

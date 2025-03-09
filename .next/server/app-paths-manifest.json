@@ -1,0 +1,16 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(dashboard)/founder/page": "app/(dashboard)/founder/page.js",
+  "/(dashboard)/investor/page": "app/(dashboard)/investor/page.js",
+  "/ai-agent/page": "app/ai-agent/page.js",
+  "/explore/[project]/page": "app/explore/[project]/page.js",
+  "/explore/page": "app/explore/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/images/icon.png/route": "app/images/icon.png/route.js",
+  "/investorkyc/page": "app/investorkyc/page.js",
+  "/kyc/page": "app/kyc/page.js",
+  "/landing/page": "app/landing/page.js",
+  "/page": "app/page.js",
+  "/startupkyc/page": "app/startupkyc/page.js",
+  "/create/page": "app/create/page.js"
+}

@@ -1,8 +1,6 @@
 "use client"
 
-import { TrendingUp } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts"
 import {
   Card,
   CardContent,
@@ -11,61 +9,63 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/shared/card"
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-]
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig
+interface BarChartCardProps {
+  data: number[]
+  labels: string[]
+  label: string
+  color: string
+}
 
-export function BarChartCard() {
+export function BarChartCard({ data, labels, label, color }: BarChartCardProps) {
+  // Transform the data into the format recharts expects
+  const chartData = labels.map((label, index) => ({
+    name: label,
+    value: data[index]
+  }))
+
   return (
-    <Card >
+    <Card>
       <CardHeader>
         <CardTitle>Bar Chart - Multiple</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent></CardContent>
       <CardFooter className="h-full h-[100px]">
-        <ChartContainer config={chartConfig} className=" h-full w-full border">
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
+        <div className="w-full h-[200px]">
+          <BarChart width={400} height={200} data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+            <XAxis 
+              dataKey="name" 
+              tickLine={false} 
               tickMargin={10}
               axisLine={false}
               tickFormatter={(value) => value.slice(0, 3)}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
+            <YAxis 
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => `${value}`}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+            <Tooltip 
+              formatter={(value) => [`${value}`, label]}
+              labelStyle={{ color: '#666' }}
+              contentStyle={{ 
+                background: 'rgba(255, 255, 255, 0.9)',
+                border: 'none',
+                borderRadius: '4px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+              }}
+            />
+            <Bar 
+              dataKey="value" 
+              fill={color} 
+              radius={[4, 4, 0, 0]}
+              maxBarSize={40}
+            />
           </BarChart>
-        </ChartContainer>
+        </div>
       </CardFooter>
-
     </Card>
   )
 }

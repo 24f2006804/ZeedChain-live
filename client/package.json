@@ -54,7 +54,9 @@
   "devDependencies": {
     "@types/three": "^0.174.0",
     "@types/web3": "^1.2.2",
-    "eslint": "8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.56.0",
     "eslint-config-next": "14.1.0"
   }
 }

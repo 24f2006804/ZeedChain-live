@@ -190,7 +190,14 @@ const FounderDashboard = () => {
   );
 };
 
-function MetricCard({ title, value, change, icon }) {
+interface MetricCardProps {
+  title: string;
+  value: string;
+  change: string;
+  icon: React.ReactNode;
+}
+
+function MetricCard({ title, value, change, icon }: MetricCardProps) {
   return (
     <Card className="border">
       <CardContent className="p-6">
@@ -207,7 +214,13 @@ function MetricCard({ title, value, change, icon }) {
   );
 }
 
-function SaleItem({ address, amount, date }) {
+interface SaleItemProps {
+  address: string;
+  amount: string;
+  date: string;
+}
+
+function SaleItem({ address, amount, date }: SaleItemProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">

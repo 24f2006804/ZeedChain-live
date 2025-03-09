@@ -2,22 +2,26 @@ import { ethers } from 'ethers';
 import deployedContracts from '../web3/deployed-contracts.json';
 
 export class Web3Service {
-  private provider: ethers.providers.Web3Provider;
+  private provider: ethers.BrowserProvider;
   private kycContract: ethers.Contract;
   private startupContract: ethers.Contract;
 
-  constructor() {
-    if (typeof window !== 'undefined' && window.ethereum) {
-      this.provider = new ethers.providers.Web3Provider(window.ethereum);
+  constructor(provider: ethers.BrowserProvider) {
+    this.provider = provider;
+  }
+
+  async init() {
+    if (typeof window !== 'undefined') {
+      const signer = await this.provider.getSigner();
       this.kycContract = new ethers.Contract(
-        deployedContracts.KYC.address,
-        deployedContracts.KYC.abi,
-        this.provider
+        deployedContracts.verificationOracle, // Using verificationOracle for KYC
+        [], // TODO: Add ABI
+        signer
       );
       this.startupContract = new ethers.Contract(
-        deployedContracts.Startup.address,
-        deployedContracts.Startup.abi,
-        this.provider
+        deployedContracts.startupValidation,
+        [], // TODO: Add ABI
+        signer
       );
     }
   }
@@ -42,7 +46,7 @@ export class Web3Service {
 
   async registerStartup(startupData: any): Promise<boolean> {
     try {
-      const signer = this.provider.getSigner();
+      const signer = await this.provider.getSigner();
       const startupWithSigner = this.startupContract.connect(signer);
       
       // Convert data to match contract structure
@@ -52,8 +56,8 @@ export class Web3Service {
         fundingStage: startupData.funding,
         details: startupData.details,
         financials: {
-          arr: ethers.utils.parseEther(startupData.arr.replace(/[^0-9.]/g, '')),
-          mrr: ethers.utils.parseEther(startupData.mrr.replace(/[^0-9.]/g, '')),
+          arr: ethers.parseEther(startupData.arr.replace(/[^0-9.]/g, '')),
+          mrr: ethers.parseEther(startupData.mrr.replace(/[^0-9.]/g, '')),
           cogs: parseInt(startupData.cogs),
           marketing: parseInt(startupData.marketing),
           cac: parseInt(startupData.cac),
@@ -77,7 +81,7 @@ export class Web3Service {
 
   async completeKYC(kycData: any): Promise<boolean> {
     try {
-      const signer = this.provider.getSigner();
+      const signer = await this.provider.getSigner();
       const kycWithSigner = this.kycContract.connect(signer);
       
       const tx = await kycWithSigner.completeKYC(
