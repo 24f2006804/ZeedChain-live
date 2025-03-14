@@ -22,12 +22,12 @@ const NavBar = () => {
 
   return (
     <>{currentPath !== "/" && (<header className="border-grid sticky top-0 z-[60] w-full border-b border-dashed  backdrop-blur supports-[backdrop-filter]:bg-background/60 bg-white">
-      <div className="container-wrapper border">
-        <div className="container flex h-14 items-center gap-2 justify-between px-5 md:gap-4 border">
+      <div className="container-wrapper ">
+        <div className="container flex h-14 items-center gap-2 justify-between px-5 md:gap-4 ">
           <a href="/">
-            <img src="/images/icon.png" className="w-8 h-8" alt="Logo" />
+            <img src="/images/zeedchainlogo-bw.png" className="w-6 h-7" alt="Logo" />
           </a>
-          <nav className="flex items-center gap-7 border">
+          <nav className="flex items-center gap-7 ">
             {links.map((item) => (
               <Link
                 key={item.href}

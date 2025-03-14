@@ -1,0 +1,399 @@
+// src/app/whitepaper/page.tsx
+import { getMarkdownContent } from '@/lib/mdx-utils';
+import MarkdownRenderer from '@/components/MarkdownRenderer';
+
+export default function WhitepaperPage() {
+  const _content = `# ZeedChain: Democratizing Equity Funding for Student-Led Startups
+
+## Executive Summary
+
+ZeedChain is a decentralized finance (DeFi) platform that revolutionizes how student-led startups access funding and manage equity. By leveraging blockchain technology, ZeedChain tokenizes company equity as NFTs, enabling fractional investment, transparent governance, and efficient profit distribution. The platform incorporates AI-powered investment advisory through "Belfort," our intelligent agent that analyzes startup potential and provides tailored investment recommendations.
+
+In an era where traditional funding mechanisms often exclude young entrepreneurs, ZeedChain creates an inclusive ecosystem that connects student innovators with global investors while providing the transparency, security, and efficiency that blockchain technology enables.
+
+## 1. Introduction
+
+### 1.1 The Problem
+
+Student entrepreneurs face significant barriers when seeking funding for their ventures:
+
+- Limited access to traditional venture capital
+- Lack of established networks and credibility
+- Complex and expensive equity management systems
+- Opaque governance and investment structures
+- Geographical limitations on investor reach
+
+Simultaneously, investors interested in early-stage, student-led ventures encounter challenges:
+
+- Difficulty discovering promising student startups
+- Limited transparency into company operations and fund utilization
+- Inefficient mechanisms for equity ownership and transfer
+- Minimal influence in governance decisions
+- Complex profit distribution processes
+
+
+### 1.2 The Solution
+
+ZeedChain addresses these challenges by creating a blockchain-based platform that:
+
+- Tokenizes startup equity as NFTs, enabling fractional ownership
+- Provides a transparent marketplace for discovering and investing in student ventures
+- Implements smart contracts for automated governance and profit distribution
+- Utilizes oracles for reliable data verification and valuation
+- Incorporates AI-driven investment analysis through "Belfort"
+- Streamlines the entire investment process from discovery to returns
+
+
+## 2. Market Analysis
+
+### 2.1 Target Market
+
+ZeedChain serves two primary user segments:
+
+**Student Entrepreneurs:**
+
+- University students with innovative business ideas
+- Student-led startups seeking seed or early-stage funding
+- Academic projects with commercialization potential
+
+**Investors:**
+
+- Individual investors interested in early-stage opportunities
+- Angel investors seeking portfolio diversification
+- Educational institutions supporting student entrepreneurship
+- Alumni networks looking to support student ventures
+
+
+### 2.2 Market Trends
+
+The convergence of several trends creates an opportune moment for ZeedChain:
+
+- **Growth in Student Entrepreneurship**: Universities increasingly emphasize entrepreneurial education and startup incubation.
+- **DeFi Expansion**: Decentralized finance is disrupting traditional financial services by removing intermediaries and increasing access.
+- **Tokenization of Assets**: Real-world assets are increasingly being represented as digital tokens on blockchains.
+- **Democratization of Investment**: Fractional ownership is enabling broader participation in previously exclusive investment opportunities.
+- **AI-Powered Financial Services**: Artificial intelligence is transforming investment analysis and decision-making.
+
+As noted in recent research, "With the rise of decentralized finance and student-focused venture capital, young founders will have unprecedented access to capital" through "micro-investment models" and "school-owned investment funds."
+
+## 3. ZeedChain Platform Overview
+
+### 3.1 Core Components
+
+ZeedChain consists of several integrated components that work together to create a comprehensive funding and equity management ecosystem:
+
+1. **Equity NFT System**: Tokenizes startup equity as non-fungible tokens
+2. **Fractional Investment Mechanism**: Enables partial ownership of equity NFTs
+3. **Startup Validation Framework**: Verifies startup credentials and documentation
+4. **Dynamic Valuation Engine**: Provides real-time valuation updates
+5. **Governance Protocol**: Facilitates stakeholder voting and decision-making
+6. **Fund Utilization Verification**: Ensures transparent use of invested capital
+7. **Profit Distribution System**: Automates dividend and return payments
+8. **Belfort AI Advisor**: Analyzes startups and provides investment recommendations
+
+### 3.2 Platform Architecture
+
+ZeedChain is built on a modular architecture that leverages blockchain technology, oracles, and AI:
+
+- **Blockchain Layer**: Provides the foundation for tokenization, transactions, and smart contracts
+- **Oracle Layer**: Connects on-chain and off-chain data for verification and valuation
+- **Application Layer**: Delivers user interfaces and experiences for different stakeholders
+- **AI Layer**: Powers the Belfort advisor and analytical capabilities
+
+
+### 3.3 User Roles and Permissions
+
+The platform supports multiple user roles with specific permissions:
+
+- **Founders**: Can register startups, manage equity, request fund withdrawals, and communicate with investors
+- **Investors**: Can discover startups, make investments, participate in governance, and receive profits
+- **Validators**: Verify startup documentation and credentials
+- **Administrators**: Maintain platform integrity and resolve disputes
+
+
+## 4. Key Features and Functionality
+
+### 4.1 Equity Tokenization
+
+ZeedChain transforms traditional equity into digital assets through NFTs:
+
+- Each startup's equity is represented as a unique NFT
+- Smart contracts define ownership rights, voting power, and profit distribution
+- Tokenized equity can be fractionalized for smaller investment amounts
+- Ownership records are immutably stored on the blockchain
+- Transfers occur without intermediaries or paperwork
+
+
+### 4.2 Fractional Investment
+
+The platform democratizes access to startup investment through:
+
+- Minimal investment thresholds
+- Fractional ownership of equity NFTs
+- Transparent pricing and valuation
+- Automated investment processing
+- Diversification across multiple startups
+
+
+### 4.3 Startup Validation
+
+To ensure quality and trust, ZeedChain implements a robust validation process:
+
+- Verification of student and university affiliations
+- Documentation review (business plans, financial projections)
+- Team background verification
+- Oracle-based data validation
+- Community-driven reputation systems
+
+
+### 4.4 Dynamic Valuation
+
+The platform provides real-time valuation insights through:
+
+- Oracle-powered market data integration
+- Comparable startup analysis
+- Performance metric tracking
+- Milestone achievement verification
+- AI-enhanced valuation models
+
+
+### 4.5 Governance and Voting
+
+ZeedChain empowers stakeholders through decentralized governance:
+
+- Proposal creation and voting
+- Weighted voting based on equity ownership
+- Transparent decision records
+- Automated execution of approved proposals
+- Multi-signature requirements for critical decisions
+
+
+### 4.6 Fund Utilization Verification
+
+The platform ensures transparency in how funds are used:
+
+- Milestone-based fund release
+- Expenditure reporting and verification
+- Investor approval for significant expenses
+- Real-time fund utilization dashboards
+- Oracle-verified expense validation
+
+
+### 4.7 Profit Distribution
+
+ZeedChain automates the distribution of returns:
+
+- Smart contract-based dividend payments
+- Proportional distribution based on ownership
+- Transparent transaction records
+- Multiple distribution options (reinvestment, withdrawal)
+- Tax documentation generation
+
+
+### 4.8 Belfort AI Advisor
+
+The platform's AI agent provides intelligent investment insights:
+
+- Startup analysis and scoring
+- Risk assessment and opportunity identification
+- Personalized investment recommendations
+- Natural language interaction for specific queries
+- Continuous learning from platform data
+
+
+## 5. Technology Implementation
+
+### 5.1 Blockchain Infrastructure
+
+ZeedChain leverages blockchain technology for its core functionality:
+
+- **Smart Contracts**: Automate agreements, transactions, and governance
+- **Tokenization Standards**: Implement ERC-721 for NFTs and ERC-1155 for fractional ownership
+- **Consensus Mechanism**: Ensures agreement on transaction validity
+- **Immutable Ledger**: Provides permanent record of all transactions
+- **Decentralized Storage**: Secures documentation and metadata
+
+
+### 5.2 Oracle Integration
+
+To bridge on-chain and off-chain data, ZeedChain incorporates oracle services:
+
+- **Data Verification**: Validates startup credentials and documentation
+- **Market Data**: Provides external pricing and valuation information
+- **Performance Metrics**: Tracks startup KPIs and milestones
+- **Identity Verification**: Confirms student and university affiliations
+- **Regulatory Compliance**: Ensures adherence to relevant regulations
+
+
+### 5.3 AI Implementation
+
+The Belfort AI advisor leverages advanced artificial intelligence:
+
+- **Natural Language Processing**: Enables conversational interaction
+- **Machine Learning**: Analyzes patterns in successful startups
+- **Predictive Analytics**: Forecasts potential investment outcomes
+- **Data Visualization**: Presents insights in comprehensible formats
+- **Continuous Learning**: Improves recommendations over time
+
+
+## 6. User Experience
+
+### 6.1 Startup Registration and Funding
+
+The platform provides a streamlined process for entrepreneurs:
+
+1. **Registration**: Founders create profiles and submit startup documentation
+2. **Validation**: The platform verifies credentials and documentation
+3. **Tokenization**: Upon approval, equity is tokenized as an NFT
+4. **Listing**: The startup appears in the marketplace with key information
+5. **Funding**: Investors can purchase fractional ownership
+6. **Fund Release**: Capital is released according to milestone achievements
+7. **Reporting**: Founders provide regular updates on progress and fund utilization
+
+### 6.2 Investment Discovery and Management
+
+Investors benefit from an intuitive experience:
+
+1. **Exploration**: Browse and filter startups based on various criteria
+2. **Analysis**: Review startup details, team information, and Belfort insights
+3. **Investment**: Purchase fractional equity with transparent pricing
+4. **Portfolio Management**: Track investments and performance in a unified dashboard
+5. **Governance Participation**: Vote on proposals and contribute to decisions
+6. **Returns**: Receive automated profit distributions
+7. **Reinvestment**: Easily reinvest returns into new opportunities
+
+## 7. Business Model
+
+### 7.1 Revenue Streams
+
+ZeedChain generates revenue through multiple channels:
+
+- **Transaction Fees**: Small percentage on investment transactions
+- **Listing Fees**: Nominal fees for startup registration
+- **Premium Services**: Enhanced features for investors and startups
+- **Data Analytics**: Aggregated market insights for institutional clients
+- **API Access**: Integration capabilities for third-party services
+
+
+### 7.2 Value Proposition
+
+The platform delivers unique value to all stakeholders:
+
+**For Student Entrepreneurs:**
+
+- Access to global investment capital
+- Reduced administrative burden
+- Transparent governance and communication
+- Milestone-based funding release
+- Credibility through validation
+
+**For Investors:**
+
+- Discovery of promising early-stage opportunities
+- Fractional investment capabilities
+- Transparent fund utilization
+- Automated returns distribution
+- AI-powered investment insights
+
+
+## 8. Competitive Landscape
+
+ZeedChain differentiates itself in several ways:
+
+- **Focus on Student Entrepreneurs**: Specialized platform for university-based innovation
+- **Integrated AI Advisory**: Belfort provides unique investment intelligence
+- **End-to-End Solution**: Covers the entire funding and equity management lifecycle
+- **Transparent Governance**: Empowers investors with real influence
+- **Educational Component**: Builds financial and entrepreneurial literacy
+
+
+## 9. Roadmap
+
+### 9.1 Development Phases
+
+ZeedChain will be implemented in phases:
+
+**Phase 1: Foundation (Q2 2025)**
+
+- Core smart contract development
+- Basic platform functionality
+- Initial university partnerships
+- Testnet deployment
+
+**Phase 2: Expansion (Q3-Q4 2025)**
+
+- Enhanced AI capabilities
+- Advanced governance features
+- Mobile application launch
+- Additional university onboarding
+
+**Phase 3: Maturity (2026)**
+
+- Cross-chain functionality
+- Institutional partnerships
+- Advanced analytics
+- Global expansion
+
+
+### 9.2 Milestones
+
+Key milestones include:
+
+- MVP launch on testnet
+- First successful startup funding
+- 100 registered startups
+- 1,000 active investors
+- First profit distributions
+- Mobile app release
+
+
+## 10. Risk Assessment and Mitigation
+
+### 10.1 Technical Risks
+
+- **Smart Contract Vulnerabilities**: Mitigated through comprehensive audits and formal verification
+- **Oracle Reliability**: Addressed with redundant data sources and fallback mechanisms
+- **Scalability Challenges**: Managed through optimized architecture and layer-2 solutions
+- **Security Threats**: Countered with robust security practices and regular penetration testing
+
+
+### 10.2 Market Risks
+
+- **Regulatory Uncertainty**: Monitored through legal advisors and compliance frameworks
+- **Adoption Barriers**: Addressed through educational resources and intuitive user experience
+- **Competition**: Differentiated through unique features and strategic partnerships
+- **Market Volatility**: Managed with stable valuation mechanisms and diversification options
+
+
+## 11. Conclusion
+
+ZeedChain represents a paradigm shift in how student-led startups access funding and manage equity. By leveraging blockchain technology, oracles, and artificial intelligence, the platform creates an ecosystem where young entrepreneurs can thrive and investors can discover promising opportunities early.
+
+As the worlds of education, entrepreneurship, and decentralized finance converge, ZeedChain stands at the intersection, ready to empower the next generation of innovators and democratize access to startup investment.
+
+The future of student entrepreneurship is tokenized, transparent, and accessible—and ZeedChain is leading the way.
+
+---
+
+## References
+
+1. "DeFi: Disrupting the Fintech Space" - Zeeve
+2. "How Online Schools Are Shaping the Entrepreneurs of Tomorrow" - Times of India
+3. "What is DeFi?" - Coinbase
+4. "A Student Startup Builds E-commerce on the Blockchain" - Wharton Global Youth Program
+5. "What is decentralized finance (DeFi)?" - TechTarget
+6. "Blockchain startup Avail raises \$27M in Seed round" - YourStory.com
+7. "Blockchain for Decentralized Finance (DeFi)" - Consensys
+8. "Certified Blockchain Startup" - Kerala Blockchain Academy
+9. "DeFi risks and the decentralisation illusion" - Bank for International Settlements
+      `
+  return (
+    <div className="container mx-auto py-10 px-10">
+      <article>
+        <div className="prose dark:prose-invert lg:prose-xl max-w-none">
+          <MarkdownRenderer source={_content} />
+        </div>
+      </article>
+    </div>
+  );
+}
