@@ -6,6 +6,7 @@ import { Button } from "./button";
 import WalletConnect from "../WalletConnect";
 
 const links = [
+  { name: "Whitepaper", href: "/whitepaper", searchHref: "/whitepaper" },
   { name: "Explore", href: "/explore", searchHref: "/explore" },
   { name: "Dashboard", href: "/investor", searchHref: "/investor" },
   { name: "KYC", href: "/kyc", searchHref: "/kyc" },
@@ -21,19 +22,25 @@ const NavBar = () => {
   };
 
   return (
-    <>{currentPath !== "/" && (<header className="border-grid sticky top-0 z-[60] w-full border-b border-dashed  backdrop-blur supports-[backdrop-filter]:bg-background/60 bg-white">
-      <div className="container-wrapper ">
-        <div className="container flex h-14 items-center gap-2 justify-between px-5 md:gap-4 ">
-          <a href="/">
-            <img src="/images/zeedchainlogo-bw.png" className="w-6 h-7" alt="Logo" />
-          </a>
-          <nav className="flex items-center gap-7 ">
-            {links.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                scroll={false}
-                className={`
+    <>
+      {currentPath !== "/" && (
+        <header className="border-grid sticky top-0 z-[60] w-full border-b border-dashed  backdrop-blur supports-[backdrop-filter]:bg-background/60 bg-white">
+          <div className="container-wrapper ">
+            <div className="container flex h-14 items-center gap-2 justify-between px-5 md:gap-4 ">
+              <a href="/">
+                <img
+                  src="/images/zeedchainlogo-bw.png"
+                  className="w-6 h-7"
+                  alt="Logo"
+                />
+              </a>
+              <nav className="flex items-center gap-7 ">
+                {links.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    scroll={false}
+                    className={`
               text-l font-light
               ${
                 isActive(item.searchHref)
@@ -41,17 +48,17 @@ const NavBar = () => {
                   : "text-stone-400 hover:text-stone-200"
               }
             `}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <WalletConnect />
-          </nav>
-        </div>
-      </div>
-    </header>)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                <WalletConnect />
+              </nav>
+            </div>
+          </div>
+        </header>
+      )}
     </>
-    
   );
 };
 
