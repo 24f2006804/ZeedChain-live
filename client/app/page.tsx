@@ -20,7 +20,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
-import InvestmentFeaturesGrid from "@/components/landing/howitworks";
+import InvestmentFeaturesGrid from "@/components/landing/working";
 
 const playfair = Playfair_Display({ subsets: ["latin"] });
 
