@@ -20,6 +20,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import InvestmentFeaturesGrid from "@/components/landing/howitworks";
 
 const playfair = Playfair_Display({ subsets: ["latin"] });
 
@@ -27,7 +28,7 @@ export default function Home() {
   const router = useRouter();
   return (
     <>
-      <div className="absolute top-0 left-0 h-screen w-screen">
+      <div className="absolute top-0 left-0 h-screen w-screen bg-black">
         <NoiseFilter />
         <div className="fixed top-0 left-0 h-full w-full z-0"></div>
         <div className="fixed inset-0 flex justify-center bg-black/20 z-20"></div>
@@ -203,18 +204,32 @@ export default function Home() {
               ZeedChain
             </span>
           </span>
-          <Button
-            variant={"outline"}
-            className="mt-5 bg-violet-200/10 hover:bg-violet-200/20 border border-violet-200/10 rounded-full text-[1rem] font-light p-5 relative -top-[20%]"
-            onClick={() => router.push("/explore")}
-          >
-            <span className="flex items-center">
-              <span>Start Investing</span>
-              <span className="ml-2">
-                <ChevronRight className="h-4 w-4" />
+
+            <Button
+              variant={"outline"}
+              className="mt-5 bg-violet-200/10 hover:bg-violet-200/20 border border-violet-200/10 rounded-full text-[1rem] font-light p-5 relative -top-[20%]"
+              onClick={() => router.push("/explore")}
+            >
+              <span className="flex items-center">
+                <span>Start Investing</span>
+                <span className="ml-2">
+                  <ChevronRight className="h-4 w-4" />
+                </span>
               </span>
-            </span>
-          </Button>
+            </Button>
+            <Button
+              variant={"outline"}
+              className="mt-5 bg-violet-200/10 hover:bg-violet-200/20 border border-violet-200/10 rounded-full text-[1rem] font-light p-5 relative -top-[20%]"
+              onClick={() => router.push("/explore")}
+            >
+              <span className="flex items-center">
+                <span>Whitepaper</span>
+                <span className="ml-2">
+                  <ChevronRight className="h-4 w-4" />
+                </span>
+              </span>
+            </Button>
+
         </div>
         <div className="relative flex items-center flex-col w-full bg-gradient-to-b from-black/20 to-transparent pt-5 before:absolute before:top-0 before:left-0 before:w-full before:h-32 before:bg-gradient-to-b before:from-black/40 before:to-transparent">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#EAEAEA] via-[#DBDBDB] to-[#ADA996] font-regular text-5xl font-bold pb-5">
@@ -262,13 +277,25 @@ export default function Home() {
             ))}
           </div>
         </div>
+        <div className="relative flex items-center flex-col w-full bg-gradient-to-b from-black/20 to-transparent pt-5 before:absolute before:top-0 before:left-0 before:w-full before:h-32 before:bg-gradient-to-b before:from-black/40 before:to-transparent">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#EAEAEA] via-[#DBDBDB] to-[#ADA996] font-regular text-5xl font-bold pb-5">
+            How it Works
+          </span>
+          <InvestmentFeaturesGrid />
+        </div>
         <footer className="w-full bg-gradient-to-b from-black to-black border-t bg-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
               <div>
                 <div className="flex items-center">
-                  <img src="/images/zeedchainlogo-white.png" alt="ZC" className="mr-2 w-4  h-5 mb-4" />
-                  <h3 className="text-xl font-bold text-white mb-4">ZeedChain</h3>
+                  <img
+                    src="/images/zeedchainlogo-white.png"
+                    alt="ZC"
+                    className="mr-2 w-4  h-5 mb-4"
+                  />
+                  <h3 className="text-xl font-bold text-white mb-4">
+                    ZeedChain
+                  </h3>
                 </div>
                 <p className="text-gray-400 mb-4">
                   Democratizing equity with ZeedChain
@@ -343,10 +370,10 @@ export default function Home() {
                 <ul className="space-y-2">
                   <li>
                     <a
-                      href="/docs"
+                      href="/whitepaper"
                       className="text-gray-400 hover:text-violet-400 transition-colors"
                     >
-                      Documentation
+                      Whitepaper
                     </a>
                   </li>
                   <li>
@@ -360,7 +387,7 @@ export default function Home() {
                 </ul>
               </div>
             </div>
-            
+
             <div className=" pt-8 flex flex-col md:flex-row justify-between items-center">
               <div className="text-gray-500 mb-4 md:mb-0 flex items-center">
                 <span>© 2025 ZeedChain. All rights reserved.</span>
