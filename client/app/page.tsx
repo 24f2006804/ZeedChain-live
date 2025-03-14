@@ -217,7 +217,7 @@ export default function Home() {
                 </span>
               </span>
             </Button>
-            <Button
+            {/* <Button
               variant={"outline"}
               className="mt-5 bg-violet-200/10 hover:bg-violet-200/20 border border-violet-200/10 rounded-full text-[1rem] font-light p-5 relative -top-[20%]"
               onClick={() => router.push("/explore")}
@@ -228,7 +228,7 @@ export default function Home() {
                   <ChevronRight className="h-4 w-4" />
                 </span>
               </span>
-            </Button>
+            </Button> */}
 
         </div>
         <div className="relative flex items-center flex-col w-full bg-gradient-to-b from-black/20 to-transparent pt-5 before:absolute before:top-0 before:left-0 before:w-full before:h-32 before:bg-gradient-to-b before:from-black/40 before:to-transparent">
