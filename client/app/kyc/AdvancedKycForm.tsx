@@ -19,7 +19,6 @@ const formSchema = z.object({
   addressDocument: z.string().min(1, 'Please upload your proof of address'),
   selfieImage: z.string().min(1, 'Please upload your selfie')
 });
-
 type FormData = z.infer<typeof formSchema>;
 
 // ID type options
