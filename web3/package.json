@@ -2,7 +2,7 @@
   "name": "zeedchain-web3",
   "version": "1.0.0",
   "private": true,
-  "description": "",
+  "description": "This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.",
   "main": "index.js",
   "scripts": {
     "test": "hardhat test",
@@ -41,5 +41,8 @@
     "ts-node": "^10.9.1",
     "typechain": "^8.3.0",
     "typescript": "^5.1.6"
+  },
+  "directories": {
+    "test": "test"
   }
 }

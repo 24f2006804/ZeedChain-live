@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useWeb3 } from './useWeb3';
-import { ethers } from 'ethers';
+import { parseEther, formatEther } from 'ethers';
 
 export interface FounderData {
   startups: {
@@ -89,8 +89,8 @@ export const useFounderData = () => {
         }
       }
 
-      let totalInvestments = ethers.parseEther("0");
-      let totalValuation = ethers.parseEther("0");
+      let totalInvestments = parseEther("0");
+      let totalValuation = parseEther("0");
       const allInvestors = new Set<string>();
       const startups = [];
       const recentInvestments = [];
@@ -113,7 +113,7 @@ export const useFounderData = () => {
           return {
             startupId: Number(args.startupId),
             investor: args.investor,
-            amount: ethers.formatEther(args.amount),
+            amount: formatEther(args.amount),
             timestamp: Number(args.timestamp || Math.floor(Date.now() / 1000)) * 1000 // Convert to milliseconds
           };
         });
@@ -125,8 +125,8 @@ export const useFounderData = () => {
         startups.push({
           id: Number(startupId),
           name: startup.name,
-          totalInvestment: ethers.formatEther(totalInvestment),
-          currentValuation: ethers.formatEther(startup.valuation),
+          totalInvestment: formatEther(totalInvestment),
+          currentValuation: formatEther(startup.valuation),
           investors: holders.length,
           availableShares: Number(startup.availableShares),
           totalShares: Number(startup.totalShares),
@@ -141,14 +141,14 @@ export const useFounderData = () => {
       const periods = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
       
       // Calculate revenue based on investment amounts
-      const totalInvestmentValue = Number(ethers.formatEther(totalInvestments));
+      const totalInvestmentValue = Number(formatEther(totalInvestments));
       const baseRevenue = totalInvestmentValue * 20000; // Assume revenue is 20x investment
       
       // Calculate user base based on number of investors
       const baseUserCount = allInvestors.size * 1000; // Assume each investor represents 1000 users
       
       // Calculate growth based on valuation
-      const valuationValue = Number(ethers.formatEther(totalValuation));
+      const valuationValue = Number(formatEther(totalValuation));
       const baseGrowth = (valuationValue / 100000) * 5; // 5% growth for each $100k valuation
       
       const metrics = {
@@ -160,9 +160,9 @@ export const useFounderData = () => {
 
       setData({
         startups,
-        totalInvestments: ethers.formatEther(totalInvestments),
+        totalInvestments: formatEther(totalInvestments),
         totalInvestors: allInvestors.size,
-        totalValuation: ethers.formatEther(totalValuation),
+        totalValuation: formatEther(totalValuation),
         recentInvestments: recentInvestments.slice(0, 5),
         performanceMetrics: metrics
       });

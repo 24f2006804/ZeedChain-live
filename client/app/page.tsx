@@ -78,7 +78,7 @@ export default function Home() {
                   r="100"
                   fill="none"
                   stroke="white"
-                  stroke-width="1"
+                  strokeWidth="1"
                   opacity="0"
                   filter="url(#glow)"
                 >
@@ -105,7 +105,7 @@ export default function Home() {
                   r="100"
                   fill="none"
                   stroke="white"
-                  stroke-width="1"
+                  strokeWidth="1"
                   opacity="0"
                   filter="url(#glow)"
                 >
@@ -132,7 +132,7 @@ export default function Home() {
                   r="100"
                   fill="none"
                   stroke="white"
-                  stroke-width="1"
+                  strokeWidth="1"
                   opacity="0"
                   filter="url(#glow)"
                 >
@@ -159,7 +159,7 @@ export default function Home() {
                   r="100"
                   fill="none"
                   stroke="white"
-                  stroke-width="1"
+                  strokeWidth="1"
                   opacity="0"
                   filter="url(#glow)"
                 >
@@ -184,7 +184,6 @@ export default function Home() {
             <video
               className="absolute top-[40vh] left-[51vw] transform -translate-x-1/2 z-10 scale-100 sm:scale-[1.05] md:scale-[1.1] lg:scale-[1.15] xl:scale-[1.2] overflow-x-hidden"
               src="/videos/blackhole-blue.mp4"
-              type="video/mp4"
               autoPlay
               loop
               muted
@@ -254,7 +253,7 @@ export default function Home() {
               },
               {
                 title: "Decentralized Fund Utilization",
-                desc: "Ensure transparent use of invested capital through blockchain-based tracking.",
+                desc: "Ensure transparent use of invested capital through blockchain-based tracking.",
                 icon: BrainCircuit,
               },
               {

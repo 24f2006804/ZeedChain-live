@@ -28,11 +28,17 @@ export interface KycData {
   idDocument?: string;
   addressDocument?: string;
   selfieImage?: string;
+  selfieWithId?: string;
+  selfieWithIdTimestamp?: number;
   submittedAt?: number;
   approvedAt?: number;
   rejectedAt?: number;
   rejectionReason?: string;
 }
+
+// Image validation constants
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+const VALID_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
 /**
  * Service for handling KYC verification
@@ -93,6 +99,35 @@ export class KycService {
   }
   
   /**
+   * Validate image data
+   * @param imageData base64 encoded image string
+   * @returns boolean indicating if the image is valid
+   */
+  private validateImage(imageData: string): boolean {
+    // Check if the image is a valid base64 string
+    if (!imageData.startsWith('data:image/')) {
+      return false;
+    }
+
+    // Extract the image type and content
+    const [header, content] = imageData.split(',');
+    const imageType = header.split(';')[0].split(':')[1];
+
+    // Validate image type
+    if (!VALID_IMAGE_TYPES.includes(imageType)) {
+      return false;
+    }
+
+    // Calculate size (base64 to binary)
+    const binarySize = atob(content).length;
+    if (binarySize > MAX_IMAGE_SIZE) {
+      return false;
+    }
+
+    return true;
+  }
+  
+  /**
    * Submit basic KYC verification
    */
   public async submitBasicKyc(
@@ -140,7 +175,8 @@ export class KycService {
     idExpiry: string,
     idDocument: string,
     addressDocument: string,
-    selfieImage: string
+    selfieImage: string,
+    selfieWithId: string
   ): Promise<boolean> {
     try {
       // Get current data
@@ -149,6 +185,12 @@ export class KycService {
       // Check if basic KYC is completed
       if (currentData.level < KycLevel.BASIC) {
         toast.error('Please complete basic KYC verification first');
+        return false;
+      }
+      
+      // Validate selfie with ID
+      if (!this.validateImage(selfieWithId)) {
+        toast.error('Invalid selfie image format or size');
         return false;
       }
       
@@ -162,6 +204,8 @@ export class KycService {
         idDocument,
         addressDocument,
         selfieImage,
+        selfieWithId,
+        selfieWithIdTimestamp: Date.now(),
         submittedAt: Date.now()
       };
       
@@ -259,11 +303,27 @@ export class KycService {
     const data = this.getKycData(walletAddress);
     
     if (data.status === KycStatus.PENDING) {
-      // Auto-approve after 3 seconds for demo purposes
-      setTimeout(async () => {
-        await this.approveKyc(walletAddress, KycLevel.BASIC);
-        toast.success('Your KYC verification has been approved!');
-      }, 3000);
+      // For advanced KYC, check if all required fields are present
+      if (data.level === KycLevel.BASIC && 
+          data.idType && 
+          data.idNumber && 
+          data.idExpiry && 
+          data.idDocument && 
+          data.addressDocument && 
+          data.selfieImage && 
+          data.selfieWithId) {
+        // Auto-approve advanced KYC after 3 seconds for demo purposes
+        setTimeout(async () => {
+          await this.approveKyc(walletAddress, KycLevel.ADVANCED);
+          toast.success('Your Advanced KYC verification has been approved!');
+        }, 3000);
+      } else if (data.fullName && data.email && data.country) {
+        // Auto-approve basic KYC after 3 seconds for demo purposes
+        setTimeout(async () => {
+          await this.approveKyc(walletAddress, KycLevel.BASIC);
+          toast.success('Your Basic KYC verification has been approved!');
+        }, 3000);
+      }
     }
   }
 } 

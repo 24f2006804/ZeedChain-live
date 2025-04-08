@@ -1,5 +1,8 @@
-import type { BaseContract, BigNumberish, BrowserProvider } from 'ethers';
-import { getAddress, ZeroAddress, formatUnits, parseUnits } from 'ethers';
+import type { BigNumberish } from "@ethersproject/bignumber";
+import { Web3Provider } from "@ethersproject/providers";
+import { getAddress, parseUnits } from "@ethersproject/units";
+import { AddressZero as ZeroAddress } from "@ethersproject/constants";
+import { formatUnits } from "@ethersproject/units";
 import { 
   EquityNFTFactory__factory,
   VerificationOracle__factory,
@@ -37,7 +40,7 @@ export class Web3Service {
     fractionalInvestment?: FractionalInvestment;
   } = {};
 
-  constructor(public provider: BrowserProvider) {}
+  constructor(public provider: Web3Provider) {}
 
   async init() {
     if (!this.provider) {
@@ -125,10 +128,10 @@ export class Web3Service {
         return {
           name: `Startup ${startupId}`,
           description: "This startup does not exist or has been removed.",
-          founder: ethers.ZeroAddress,
-          valuation: ethers.parseEther("0"),
-          totalShares: ethers.parseEther("0"),
-          availableShares: ethers.parseEther("0"),
+          founder: ZeroAddress,
+          valuation: parseUnits("0", 18),
+          totalShares: parseUnits("0", 18),
+          availableShares: parseUnits("0", 18),
           isValidated: false
         };
       }
@@ -371,13 +374,13 @@ export class Web3Service {
         let investmentAmount;
         if (startupId % 3 === 0) {
           // Moderate investment
-          investmentAmount = ethers.parseEther("2.5");
+          investmentAmount = parseUnits("2.5", 18);
         } else if (startupId % 3 === 1) {
           // Higher investment
-          investmentAmount = ethers.parseEther("3.8");
+          investmentAmount = parseUnits("3.8", 18);
         } else {
           // Lower investment
-          investmentAmount = ethers.parseEther("1.2");
+          investmentAmount = parseUnits("1.2", 18);
         }
         
         return investmentAmount;
@@ -400,11 +403,11 @@ export class Web3Service {
       // Return a realistic default value based on startup ID
       let defaultAmount;
       if (startupId % 3 === 0) {
-        defaultAmount = ethers.parseEther("2.5");
+        defaultAmount = parseUnits("2.5", 18);
       } else if (startupId % 3 === 1) {
-        defaultAmount = ethers.parseEther("3.8");
+        defaultAmount = parseUnits("3.8", 18);
       } else {
-        defaultAmount = ethers.parseEther("1.2");
+        defaultAmount = parseUnits("1.2", 18);
       }
       
       return defaultAmount;
@@ -429,17 +432,17 @@ export class Web3Service {
           {
             holder: "0x6AE9b9f7f404E686a5e762B851394a4708971078",
             shares: ethers.parseEther("600"),
+            shares: parseUnits("600", 18),
             percentage: 60
           },
           {
             holder: "0x7C9e161ebe55F02A1c1eBD1B77b156e53a0E5F6b",
-            shares: ethers.parseEther("250"),
+            shares: parseUnits("250", 18),
             percentage: 25
           },
           {
             holder: "0x8A8b4D179f9E44197F2E48A48bE0813213130B0D",
-            shares: ethers.parseEther("150"),
-            percentage: 15
+            shares: parseUnits("150", 18),
           }
         ];
       }
@@ -459,7 +462,7 @@ export class Web3Service {
               return {
                 holder: holder,
                 shares: ethers.parseEther("100"),
-                percentage: 10
+                shares: parseUnits("100", 18),
               };
             }
             return holder;
@@ -491,7 +494,7 @@ export class Web3Service {
                 // If it's just an address, convert to the expected format
                 return {
                   holder: holder,
-                  shares: ethers.parseEther("100"),
+                  shares: parseUnits("100", 18),
                   percentage: 10
                 };
               }
@@ -511,12 +514,12 @@ export class Web3Service {
       return [
         {
           holder: "0x6AE9b9f7f404E686a5e762B851394a4708971078",
-          shares: ethers.parseEther("700"),
+          shares: parseUnits("700", 18),
           percentage: 70
         },
         {
           holder: "0x7C9e161ebe55F02A1c1eBD1B77b156e53a0E5F6b",
-          shares: ethers.parseEther("300"),
+          shares: parseUnits("300", 18),
           percentage: 30
         }
       ];
@@ -560,6 +563,7 @@ export class Web3Service {
               startupId: startupId,
               investor: "0x6AE9b9f7f404E686a5e762B851394a4708971078",
               amount: ethers.parseEther("0.25"),
+              amount: parseUnits("0.25", 18),
               timestamp: now - day * 30 // 30 days ago
             }
           },
@@ -567,7 +571,7 @@ export class Web3Service {
             args: {
               startupId: startupId,
               investor: "0x7C9e161ebe55F02A1c1eBD1B77b156e53a0E5F6b",
-              amount: ethers.parseEther("0.5"),
+              amount: parseUnits("0.5", 18),
               timestamp: now - day * 20 // 20 days ago
             }
           },
@@ -575,7 +579,7 @@ export class Web3Service {
             args: {
               startupId: startupId,
               investor: "0x8A8b4D179f9E44197F2E48A48bE0813213130B0D",
-              amount: ethers.parseEther("0.75"),
+              amount: parseUnits("0.75", 18),
               timestamp: now - day * 10 // 10 days ago
             }
           },
@@ -583,8 +587,7 @@ export class Web3Service {
             args: {
               startupId: startupId,
               investor: "0x9B9c4d2E3F8A5B6C7D8E9F0A1B2C3D4E5F6A7B8C",
-              amount: ethers.parseEther("1.0"),
-              timestamp: now - day * 2 // 2 days ago
+              amount: parseUnits("1.0", 18),
             }
           }
         ];
@@ -595,7 +598,7 @@ export class Web3Service {
             args: {
               startupId: startupId,
               investor: "0x6AE9b9f7f404E686a5e762B851394a4708971078",
-              amount: ethers.parseEther("2.0"),
+              amount: parseUnits("2.0", 18),
               timestamp: now - day * 25 // 25 days ago
             }
           },
@@ -603,7 +606,7 @@ export class Web3Service {
             args: {
               startupId: startupId,
               investor: "0x7C9e161ebe55F02A1c1eBD1B77b156e53a0E5F6b",
-              amount: ethers.parseEther("1.5"),
+              amount: parseUnits("1.5", 18),
               timestamp: now - day * 20 // 20 days ago
             }
           },
@@ -611,7 +614,7 @@ export class Web3Service {
             args: {
               startupId: startupId,
               investor: "0x8A8b4D179f9E44197F2E48A48bE0813213130B0D",
-              amount: ethers.parseEther("0.3"),
+              amount: parseUnits("0.3", 18),
               timestamp: now - day * 5 // 5 days ago
             }
           }
@@ -623,7 +626,7 @@ export class Web3Service {
             args: {
               startupId: startupId,
               investor: "0x6AE9b9f7f404E686a5e762B851394a4708971078",
-              amount: ethers.parseEther("0.1"),
+              amount: parseUnits("0.1", 18),
               timestamp: now - day * 15 // 15 days ago
             }
           },
@@ -631,7 +634,7 @@ export class Web3Service {
             args: {
               startupId: startupId,
               investor: "0x7C9e161ebe55F02A1c1eBD1B77b156e53a0E5F6b",
-              amount: ethers.parseEther("0.2"),
+              amount: parseUnits("0.2", 18),
               timestamp: now - day * 10 // 10 days ago
             }
           },
@@ -639,7 +642,7 @@ export class Web3Service {
             args: {
               startupId: startupId,
               investor: "0x8A8b4D179f9E44197F2E48A48bE0813213130B0D",
-              amount: ethers.parseEther("0.8"),
+              amount: parseUnits("0.8", 18),
               timestamp: now - day * 3 // 3 days ago
             }
           },
@@ -647,7 +650,7 @@ export class Web3Service {
             args: {
               startupId: startupId,
               investor: "0x9B9c4d2E3F8A5B6C7D8E9F0A1B2C3D4E5F6A7B8C",
-              amount: ethers.parseEther("1.2"),
+              amount: parseUnits("1.2", 18),
               timestamp: now - day * 1 // 1 day ago
             }
           }
@@ -671,8 +674,8 @@ export class Web3Service {
       const data = iface.encodeFunctionData('registerStartup', [
         name, 
         description, 
-        ethers.parseEther(totalShares.toString()), 
-        ethers.parseEther(initialValuation.toString())
+        parseUnits(totalShares.toString(), 18), 
+        parseUnits(initialValuation.toString(), 18)
       ]);
       
       // Get the signer to send the transaction
@@ -839,7 +842,7 @@ export class Web3Service {
     console.log('Emitting local investment event:', {
       startupId,
       investor,
-      amount: ethers.parseEther(amount),
+      amount: parseUnits(amount, 18),
       timestamp: Math.floor(Date.now() / 1000)
     });
     

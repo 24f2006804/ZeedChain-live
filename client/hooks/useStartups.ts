@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
+const { parseEther, formatEther } = ethers.utils;
+const { constants } = ethers;
 import { useWeb3 } from './useWeb3';
 import { StartupData } from '@/components/ui/startupcard';
 import { toast } from 'sonner';
@@ -62,9 +64,9 @@ export const useStartups = () => {
           return {
             name: `Startup ${i}`,
             description: "Details unavailable",
-            valuation: ethers.parseEther("100000"),
-            totalShares: ethers.parseEther("1000"),
-            availableShares: ethers.parseEther("800"),
+            valuation: parseEther("100000"),
+            totalShares: parseEther("1000"),
+            availableShares: parseEther("800"),
             isValidated: false,
             founder: "Unknown"
           };
@@ -90,7 +92,7 @@ export const useStartups = () => {
         }
         
         // Check if founder is not zero address
-        const hasValidFounder = detail.founder && detail.founder !== ethers.ZeroAddress;
+        const hasValidFounder = detail.founder && detail.founder !== constants.AddressZero;
         
         return hasValidName && hasNonZeroValuation && hasValidFounder;
       });
@@ -105,7 +107,7 @@ export const useStartups = () => {
           if (typeof detail.valuation === 'object' && detail.valuation !== null && 'toString' in detail.valuation) {
             // It's a BigNumber object
             // Convert from wei to a more reasonable value (divide by 10^15 to get a reasonable number)
-            const rawValue = ethers.formatEther(detail.valuation);
+            const rawValue = formatEther(detail.valuation);
             const numValue = parseFloat(rawValue);
             // Cap the valuation at a reasonable amount (e.g., $10 million)
             valuationStr = Math.min(numValue, 10000000).toString();
@@ -126,7 +128,7 @@ export const useStartups = () => {
         try {
           if (typeof detail.totalShares === 'object' && detail.totalShares !== null && 'toString' in detail.totalShares) {
             // Convert from wei to a more reasonable value
-            const rawValue = ethers.formatEther(detail.totalShares);
+            const rawValue = formatEther(detail.totalShares);
             totalShares = Math.min(parseFloat(rawValue), 10000);
           } else if (detail.totalShares) {
             const numValue = parseFloat(String(detail.totalShares));
@@ -135,7 +137,7 @@ export const useStartups = () => {
           
           if (typeof detail.availableShares === 'object' && detail.availableShares !== null && 'toString' in detail.availableShares) {
             // Convert from wei to a more reasonable value
-            const rawValue = ethers.formatEther(detail.availableShares);
+            const rawValue = formatEther(detail.availableShares);
             availableShares = Math.min(parseFloat(rawValue), totalShares);
           } else if (detail.availableShares) {
             const numValue = parseFloat(String(detail.availableShares));

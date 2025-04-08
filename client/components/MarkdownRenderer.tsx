@@ -1,10 +1,11 @@
 // src/components/MarkdownRenderer.tsx
 import React from 'react';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote/rsc';
+import { MDXRemote } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
 
 interface MarkdownRendererProps {
-  source: MDXRemoteSerializeResult;
-}
+  source: string;
+};
 
 const components = {
   h1: ({ children }: { children: React.ReactNode }) => (
@@ -95,9 +96,24 @@ const components = {
 };
 
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ source }) => {
+  const [mdxSource, setMdxSource] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    const loadMDX = async () => {
+      const serializedContent = await serialize(source);
+      setMdxSource(serializedContent);
+    };
+    
+    loadMDX();
+  }, [source]);
+
+  if (!mdxSource) {
+    return <div className="max-w-none">Loading...</div>;
+  }
+
   return (
     <div className="max-w-none">
-      <MDXRemote source={source} components={components} />
+      <MDXRemote {...mdxSource} components={components} />
     </div>
   );
 };

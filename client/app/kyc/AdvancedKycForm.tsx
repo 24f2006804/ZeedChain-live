@@ -1,34 +1,7 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { useKyc } from '@/hooks/useKyc';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { toast } from 'sonner';
+import { AdvancedKycForm } from '@/components/kyc/AdvancedKycForm';
 
-// Form validation schema
-const formSchema = z.object({
-  idType: z.string().min(1, 'Please select an ID type'),
-  idNumber: z.string().min(3, 'ID number must be at least 3 characters'),
-  idExpiry: z.string().min(10, 'Please enter a valid expiry date'),
-  idDocument: z.string().min(1, 'Please upload your ID document'),
-  addressDocument: z.string().min(1, 'Please upload your proof of address'),
-  selfieImage: z.string().min(1, 'Please upload your selfie')
-});
-type FormData = z.infer<typeof formSchema>;
-
-// ID type options
-const idTypes = [
-  { value: 'passport', label: 'Passport' },
-  { value: 'driving_license', label: 'Driving License' },
-  { value: 'national_id', label: 'National ID Card' }
-];
-
-export const AdvancedKycForm = () => {
+// Re-export from components/kyc to avoid duplication
+export { AdvancedKycForm };
   const { submitAdvancedKyc, loading, kycData, KycStatus } = useKyc();
   const [submitting, setSubmitting] = useState(false);
   
